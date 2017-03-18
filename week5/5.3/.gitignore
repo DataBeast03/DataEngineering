@@ -1,0 +1,8 @@
+.ipynb_checkpoints
+*.csv
+*.txt
+*.log
+*.json
+*.parquet
+metastore_db
+

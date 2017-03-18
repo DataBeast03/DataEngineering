@@ -1,0 +1,16 @@
+graph {  
+    student1   [label="Student ID: 123-45-6789"];
+    student2   [label="Student ID: 987-65-4321"];
+    course1    [label="Class ID: DSCI 6003"];
+    course2    [label="Class ID: DSCI 6004"];
+    stud1prop1 [label="Name: Jane", shape=box];
+    stud2prop1 [label="Name: John", shape=box];
+    stud1prop2 [label="GPA: 3.5", shape=box];
+    clas2prop1 [label="Style: flipped", shape=box];
+    
+    {stud1prop1 stud1prop2} -- student1 [style=dashed];
+    stud2prop1 -- student2 [style=dashed];
+    student1 -- course2;
+    student2 -- {course1 course2};
+    course2 -- clas2prop1 [style=dashed];
+}

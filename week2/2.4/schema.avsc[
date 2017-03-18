@@ -1,0 +1,176 @@
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "Pedigree",
+        "fields": [{"name": "true_as_of_secs", "type": "int"}]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PersonID1",
+        "fields": [{"name": "cookie", "type": "string"}]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PersonID2",
+        "fields": [{"name": "user_id", "type": "long"}]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PageID",
+        "fields": [{"name": "url", "type": "string"}]
+    },
+    
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PageProperty",
+        "fields": [
+            {
+                "name": "id",
+                "type": "PageID"
+            },
+            {
+                "name": "property",
+                "type": {
+                    "type": "record",
+                    "name": "PagePropertyValue",
+                    "fields": [{"name": "page_views", "type": "int"}]
+                }
+            }
+        ]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PersonProperty",
+        "fields": [
+            {
+                "name": "id",
+                "type": [
+                    "PersonID1",
+                    "PersonID2"
+                ]
+            },
+
+            {
+                "name": "property",
+                "type": [
+                    {
+                        "type": "record",
+                        "name": "PersonPropertyValue1",
+                        "fields": [{"name": "full_name", "type": "string"}]
+                    },
+                    {
+                        "type": "record",
+                        "name": "PersonPropertyValue2",
+                        "fields": [
+                            {
+                                "name": "gender", 
+                                "type": {
+                                    "type": "enum",
+                                    "name": "GenderType",
+                                    "symbols": ["MALE", "FEMALE"]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "record",
+                        "name": "PersonPropertyValue3",
+                        "fields": [
+                            {
+                                "name": "location", 
+                                "type": {
+                                    "type": "record",
+                                    "name": "Location",
+                                    "fields": [
+                                        {"name": "city", "type": ["string", "null"]},
+                                        {"name": "state", "type": ["string", "null"]},
+                                        {"name": "country", "type": [ "string","null"]}
+                                    ]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "record",
+                        "name": "PersonPropertyValue4",
+                        "fields": [{"name": "age", "type": "int"}] 
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "EquivEdge",
+        "fields": [
+            {"name": "id1", "type": ["PersonID1", "PersonID2"]},
+            {"name": "id2", "type": ["PersonID1", "PersonID2"]}
+        ]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PageViewEdge",
+        "fields": [
+            {"name": "person", "type": ["PersonID1", "PersonID2"]},
+            {"name": "page", "type": "PageID"},
+            {"name": "nonce", "type": "long"}
+        ]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "PageLinkEdge",
+        "fields": [
+            {"name": "source", "type": "string"},
+            {"name": "target", "type": "string"}  
+        ]
+    },
+    {
+        "namespace": "analytics.avro",
+        "type": "record",
+        "name": "Data",
+        "fields": [
+            {
+                "name": "pedigree",
+                "type": "Pedigree"
+            },
+            {
+                "name": "dataunit",
+                "type": [
+                    {
+                        "type": "record",
+                        "name": "DataUnit1",
+                        "fields": [{"name": "person_property", "type": "PersonProperty"}]
+                    },
+                    {
+                        "type": "record",
+                        "name": "DataUnit2",
+                        "fields": [{"name": "page_property", "type": "PageProperty"}]
+                    },
+                    {
+                        "type": "record",
+                        "name": "DataUnit3",
+                        "fields": [{"name": "equiv", "type": "EquivEdge"}]
+                    },
+                    {
+                        "type": "record",
+                        "name": "DataUnit4",
+                        "fields": [{"name": "page_view", "type": "PageViewEdge"}]
+                    },
+                    {
+                        "type": "record",
+                        "name": "DataUnit5",
+                        "fields": [{"name": "page_link", "type": "PageLinkEdge"}]
+                    }
+                ]
+            }
+        ]
+    }
+]
